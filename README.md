@@ -1,3 +1,9 @@
+# Purpose of this fork
+
+This fork is based on the original EasyLogger repo (https://github.com/x821938/EasyLogger). It adds modifications to better handle timestamps on 16-bit platforms such as the Arduio Uno. I found that on the Uno platform in particular, the timestamps often contained negative numbers. I believe this is because the timestamp variables in ```print_log_time_header()``` are of type signed long, and the sprintfs that use the variable do not specify the 'l' (long) modifieer in the format specifiers. I changed all time variables to be unsigned and also updated the sprintf statements to use long format specifiers. This seemed to fix the problem. And it also works fine on 32 bit platforms like the Arduino Zero.
+
+My updates are based on version 1.1.4 and hence I tagged them to be 1.1.4.1.
+
 # EasyLogger
 If you are tired of using Serial.println statements in your code, there is a much better way. The problem with print-statements is that they constantly needs to be deleted or commented out when you don't need them.
 It's also quite cumbersome to print variables and text together, often this will result in severel lines of code just to write something like "var=xxx"

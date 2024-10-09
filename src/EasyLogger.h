@@ -51,21 +51,21 @@
         {
             // Keep things static to avoid memory fragmentation
             static const char *loglevels_text[] = {"EMERGENCY", "ALERT    ", "CRITICAL ", "ERROR    ", "WARNING  ", "NOTIC    ", "INFO     ", "DEBUG    "};
-            static long logTime;
+            static unsigned long logTime;
             static char logFormattedTime[18];
 
             logTime = millis();
 
             #if LOG_FORMATTING == LOG_FORMATTING_HMS
-                static long seconds, minutes, hours, days; // avoid memory fragmentation.
+                static unsigned long seconds, minutes, hours, days; // avoid memory fragmentation.
                 seconds = logTime / 1000;
                 minutes = seconds / 60;
                 hours = minutes / 60;
                 days = hours / 24;
-                sprintf(logFormattedTime, "%03u:%02u:%02u:%02u:%03u", days, hours % 24, minutes % 60, seconds % 60, logTime % 1000);
+                sprintf(logFormattedTime, "%03lu:%02lu:%02lu:%02lu:%03lu", days, hours % 24, minutes % 60, seconds % 60, logTime % 1000);
                 LOG_OUTPUT << logFormattedTime << "  ";
             #elif LOG_FORMATTING == LOG_FORMATTING_MILLIS
-                sprintf(logFormattedTime, "%09u", logTime);
+                sprintf(logFormattedTime, "%09lu", logTime);
                 LOG_OUTPUT << logFormattedTime << "  ";
             #elif LOG_FORMATTING == LOG_FORMATTING_NOTIME
                 // Dont print anything
